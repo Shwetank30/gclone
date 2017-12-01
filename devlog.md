@@ -163,3 +163,10 @@ It's not yet clear to me what return values from mutations should be. There are 
 3. Return the root query object itself, so that we can refetch anything we want after the mutation, in one request
 
 I'd like to try all three eventually and see how they feel in this app. Apollo Client should probably have one or two situations that it deals with the best, so that we can recommend people use that for best results.
+
+
+Mock schema created in src/schema.js
+let's get apollo server going.
+
+
+Mock server running after downgrading to depracting versions. Fix to be applied soon.
