@@ -241,3 +241,8 @@ createdAt: property('created_at'),
 score: constant(0),
 commentCount: constant(0),
 ```
+Ok, a few more queries have been added to the SQL model. no caching/batching yet, but will be implemented soon.
+
+### Part 5: Implement basic front-end
+
+Config taken from [the Graph.Cool example app](https://github.com/graphcool-examples/react-apollo-todo-example).
