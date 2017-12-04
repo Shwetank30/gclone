@@ -1,4 +1,4 @@
-# GitHunt
+# GClone
 Concept for an Apollo full-stack example app that demonstrates all of the important concepts
 
 ## Code patterns to demonstrate

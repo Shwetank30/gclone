@@ -50,13 +50,11 @@ schema {
 
 const rootResolvers = {
   Query: {
-    feed() {
-      throw new Error('Not implemented.');
+    feed(_, { type, after }, context) {
+      return context.Entries.getForFeed(type);
     },
-    entry(_, { repoFullName }) {
-      return {
-        fullName: repoFullName,
-      };
+    entry(_, { repoFullName }, context) {
+      return context.Entries.getByRepoFullName(repoFullName);
     },
     currentUser() {
       throw new Error('Not implemented.');

@@ -198,3 +198,46 @@ Let's go over the functionality we want in this connector:
 This means that the connector needs to have both per-request and per-server state - per-request for (1) and per-server for (2). We can make further optimizations later if we end up hitting the GitHub API limit but this seems like a good start.
 
 OK, I implemented a basic connector and tested (1) and (2). (3) is an optimization, so let's wire up the connector and try running some queries before we do that.
+
+Alright, the GitHub API is going!
+
+Next stop is implementing the SQL connector/models, so that we can actually insert some entries into our database.
+
+<h3> Part - 4: Setting up SQL </h3>
+
+We need to store local non-github data in SQL database.
+These include comments & entry. We can base the schema of these in our database similar to that of the GraphQL schema.
+
+
+What does that translate to in SQL types? We'll use [SQLite](https://www.sqlite.org/datatype3.html) type names. All should have timestamps and ids, just in case we need them (we're not trying to demo the most optimized SQL schema of all time in this particular app).
+
+- `comments` table
+  - `posted_by`: TEXT (GitHub username)
+  - `created_at`: INTEGER (Unix time)
+  - `content`: TEXT
+  - `entry_id`: INTEGER
+- `entries` table
+  - `repository`: TEXT (GitHub name)
+  - `posted_by`: TEXT (GitHub username)
+  - `created_at`: INTEGER (Unix time)
+- `votes` table (since we need to keep track of who has already upvoted a particular thing)
+  - `entry_id`: INTEGER
+  - `vote_value`: INTEGER (-1 or +1)
+  - `username`: TEXT (GitHub username)
+
+When we get to auth, we might need something to store login tokens as well, but we'll cross that bridge when we get there.
+
+OK, after messing about with some various Knex and GraphQL stuff, we've also set up some simple seed data, and written some basic resolvers/models. There's still a good way to go until we have a good SQL connector, but we can move on for now. My goal is to get a backend that returns the data we want first, then optimize later.
+
+There's a cool trick to simplify resolvers
+
+
+```js
+import { property, constant } from 'lodash';
+
+...
+
+createdAt: property('created_at'),
+score: constant(0),
+commentCount: constant(0),
+```
