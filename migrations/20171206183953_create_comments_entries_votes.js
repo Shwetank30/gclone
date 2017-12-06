@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
 
     knex.schema.createTable('entries', function (table) {
       table.increments();
-      table.increments();
+      table.timestamps();
       table.string('repository_name');
       table.string('posted_by');
     }),
@@ -21,15 +21,15 @@ exports.up = function(knex, Promise) {
       table.timestamps();
       table.integer('entry_id');
       table.integer('vote_value');
-      text.string('username');
+      table.string('username');
     }),
   ]);
 };
 
 exports.down = function(knex, Promise) {
   return Promise.all([
-    knex.schema.dropTable('comments');
-    knex.schema.dropTable('entries');
+    knex.schema.dropTable('comments'),
+    knex.schema.dropTable('entries'),
     knex.schema.dropTable('votes'),
   ]);
 };

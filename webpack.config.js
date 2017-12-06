@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry; './ui/index.js',
+  entry: './ui/index.js',
   output: {
     publicPath: '/'
   },
@@ -11,7 +11,7 @@ module.exports = {
       loader: 'style!css'
     }, {
       test: /\.js$/,
-      loader: 'babel',
+      loader: 'babel-loader',
       exclude: /node_modules/
     }]
   },
@@ -22,7 +22,8 @@ module.exports = {
   ],
   devServer: {
     proxy: {
-      "/graphql": "http://localhost:3010/graphql"
+      "/graphql": "http://localhost:3010/graphql",
+      "/login/*": "http://localhost:3010"
     },
   }
 }

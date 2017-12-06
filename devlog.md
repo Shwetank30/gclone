@@ -246,3 +246,15 @@ Ok, a few more queries have been added to the SQL model. no caching/batching yet
 ### Part 5: Implement basic front-end
 
 Config taken from [the Graph.Cool example app](https://github.com/graphcool-examples/react-apollo-todo-example).
+
+Basic UI setup has been implemented.
+
+Next up in part 6, we're gonna implement GitHub Login.
+For this we'll use express & passport js for middleware. We'll maintain a server & it has it's advantages & disadvantages but for the sake of simplicity we're going to go with persistent login session authentication rather than using tokens with GraphQL.
+
+Libraries we'll use:
+
+- [passport](http://passportjs.org/)
+- [passport-github](https://github.com/jaredhanson/passport-github)
+- [express-session](https://github.com/expressjs/session)
+- [connect-session-knex](https://github.com/llambda/connect-session-knex).
