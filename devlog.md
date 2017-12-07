@@ -278,3 +278,5 @@ Resolved it by providing the clientID directly, I'll change it later to process.
 Next up is adding voting for repository
 
 Optimizations will be added soon.
+
+Integrating voting mutation into the UI.
