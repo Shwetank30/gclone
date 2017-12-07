@@ -57,16 +57,32 @@ const rootResolvers = {
     entry(_, { repoFullName }, context) {
       return context.Entries.getByRepoFullName(repoFullName);
     },
-    currentUser() {
-      throw new Error('Not implemented.');
+    currentUser(_, __, context) {
+      return context.user;
     },
   },
   Mutation: {
     submitRepository() {
       throw new Error('Not implemented.');
     },
-    vote() {
-      throw new Error('Not implemented.');
+    vote(_, { repoFullName, type }, context) {
+      if(! context.user) {
+        throw new Error('Must be logged in to vote.');
+      }
+
+      const voteValue = {
+        UP: 1,
+        DOWN: -1,
+        CANCEL: 0,
+      }[type];
+
+      return context.Entries.voteForEntry(
+        repoFullName,
+        voteValue,
+        context.user.login,
+      ).then(() => {
+        return context.Entries.getByRepoFullName(repoFullName)
+      });
     },
     comment() {
       throw new Error('Not implemented.');

@@ -258,3 +258,23 @@ Libraries we'll use:
 - [passport-github](https://github.com/jaredhanson/passport-github)
 - [express-session](https://github.com/expressjs/session)
 - [connect-session-knex](https://github.com/llambda/connect-session-knex).
+
+By default `fetch` dowsn't send cookies, and we need to pass the `credentials` option.
+Hence this code was used in ui/index.js
+
+```js
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface('/graphql', {
+    credentials: 'same-origin',
+  }),
+});
+```
+Some key notes, we used sqlite3 for dev & postgres for production & the library used was knex which I had to learn before setting it up. Migrations, seeds & blah blah.
+
+Right now, I've been stuck in OAuth for a whole day & am gonna try to figure out how to get rid of the ClientID option not found error.
+
+Resolved it by providing the clientID directly, I'll change it later to process.env variables.
+
+Next up is adding voting for repository
+
+Optimizations will be added soon.
