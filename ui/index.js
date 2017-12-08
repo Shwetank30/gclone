@@ -26,7 +26,7 @@ render((
       <Route path="/" component={Layout}>
         <IndexRoute component={Feed} />
         <Route path="feed/:type" component={Feed} />
-        <Route path="new" component={NewEntry} />
+        <Route path="submit" component={NewEntry} />
       </Route>
     </Router>
   </ApolloProvider>
