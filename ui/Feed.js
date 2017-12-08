@@ -56,6 +56,8 @@ const FeedContent = ({ entries, currentUser, vote }) => (
             <InfoLabel label="Issues" value={ entry.repository.open_issues_count } />
             &nbsp;&nbsp;&nbsp;
             Submitted <TimeAgo date={ entry.createdAt } />
+            &nbsp;by&nbsp;
+            <a href={entry.postedBy.html_url}>{ entry.postedBy.login }</a>
           </p>
         </div>
       </div>
@@ -79,7 +81,7 @@ const Feed = ({ data, mutations }) => {
 }
 
 const FeedWithData = connect({
-  mapQueriesToProps: () => ({
+  mapQueriesToProps: ({ ownProps }) => ({
     data: {
       query: gql`
         query Feed($type: FeedType!) {
@@ -93,6 +95,10 @@ const FeedWithData = connect({
             createdAt
             score
             commentCount
+            postedBy {
+              login
+              html_url
+            }
             repository {
               name
               full_name
@@ -109,7 +115,11 @@ const FeedWithData = connect({
         }
       `,
       variables: {
-        type: 'TOP',
+        type: (
+          ownProps.params &&
+          ownProps.params.type &&
+          ownProps.params.type.toUpperCase()
+        ) || 'TOP',
       },
     },
   }),

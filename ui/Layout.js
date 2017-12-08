@@ -1,5 +1,19 @@
 import React from 'react';
 import { connect } from 'react-apollo';
+import { Link } from 'react-router';
+
+const NavbarLink = ({ title, href, active=false }) => (
+  <li className={ active && "active"}>
+    <Link to={href}>
+      { title }
+      { active && (
+        <span className="sr-only">
+          (current)
+        </span>
+      ) }
+    </Link>
+  </li>
+)
 
 const Profile = ({ data }) => {
   if (data.loading) {
@@ -36,14 +50,11 @@ const ProfileWithData = connect({
           }
         }
       `,
-      variables: {
-        type: 'TOP',
-      },
     },
   })
 })(Profile);
 
-const Layout = ({ children }) => (
+const Layout = ({ children, params }) => (
   <div>
     <nav className="navbar navbar-default">
       <div className="container">
@@ -51,9 +62,14 @@ const Layout = ({ children }) => (
           <a className="navbar-brand" href="#">GClone</a>
         </div>
 
+        <ul className="nav navbar-nav">
+          <NavbarLink title="Top" href="/feed/top" />
+          <NavbarLink title="New" href="/feed/new" />
+        </ul>
+
         <ProfileWithData />
       </div>
-      
+
     </nav>
     <div className="container">
       { children }

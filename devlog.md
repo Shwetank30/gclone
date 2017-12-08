@@ -280,3 +280,49 @@ Next up is adding voting for repository
 Optimizations will be added soon.
 
 Integrating voting mutation into the UI.
+
+We're now going to add routes & the abitlity to submit new entries and more features.
+
+Now it's time to add routing to our page. There are going to be three as per the user story given to me.
+1. Home page feed.
+2. Page to add a new entry
+3. Page for a specific entry, perhaps with a comment list.
+
+We'll do the first two now & the third one later.
+We'll use react-router for this. We already have `Layout` and `Feed` components that we should just be able to drop into the routes. They'll probably look like this:
+
+```js
+// Sketch of code, not guaranteed to work
+
+// Before, no router
+render(
+  <ApolloProvider client={client}>
+    <Layout><Feed /></Layout>
+  </ApolloProvider>,
+  document.getElementById('root')
+)
+
+// After, with routes
+render((
+  <ApolloProvider client={client}>
+    <Router history={browserHistory}>
+      <Route path="/" component={Layout}>
+        <IndexRoute component={Feed} />
+        <Route path="new" component={NewEntry}/>
+        <Route path="*" component={NoMatch}/>
+      </Route>
+    </Router>
+  </ApolloProvider>
+), document.body)
+```
+
+In addition to adding the routes, we need to implement:
+
+1. `NewEntry`, a simple form for adding a new component, and
+2. `NoMatch`, basically a 404 page.
+
+Also, this is a good opportunity to add a `new` feed in addition to `top`, which can be driven by query parameters and links in the navbar.
+
+Implemeted the submit api but still facing issues now with github login because I made an error while redirecting.
+
+Implemented submitting a new repository & voting enabled.

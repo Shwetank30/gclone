@@ -23,6 +23,7 @@ export const resolvers = {
       return context.Repositories.getByFullName(repository_name);
     },
     postedBy({ posted_by }, _, context) {
+      // console.log(context.Users);
       return context.Users.getByLogin(posted_by);
     },
     comments() {
