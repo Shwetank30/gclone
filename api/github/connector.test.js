@@ -10,11 +10,6 @@ function mockRequestPromise(requestOptions) {
 
   const nextRequest = requestQueue.shift();
 
-  console.log("Expected: ");
-  console.log("requestOptions");
-  console.log("Actual: ");
-  console.log(nextRequest);
-
   // Ensure this is the request we expected
 
   assert.deepEqual(requestOptions, nextRequest.options);
@@ -121,43 +116,31 @@ describe('GitHub connector', () => {
     });
   });
 
-  it('should correctly interpret etags from Github', (done) => {
-    const connector = new GitHubConnector({
-      client_id: 'fake_client_id',
-      client_secret: 'fake_client_secret',
-    });
-    const testEtag = 'notarealetag';
+  it('should correctly interpret etags from Github', () => {
+    const connector = new GitHubConnector();
+    const etag = 'etag';
 
+    pushMockRequest({
+      options: { uri: '/endpoint' },
+      result: {headers : {'etag': etag}, body: { id: 1}},
+    });
+
+    const connector2 = new GitHubConnector();
     pushMockRequest({
       options: {
         uri: '/endpoint',
-        qs: {
-          client_id: 'fake_client_id',
-          client_secret: 'fake_client_secret',
-        },
-      },
-      result: {headers : {'etag': testEtag}, body: {id: 1}},
-    });
-
-    pushMockRequest({
-      options: {
-        uri: '/endpoint',
-        qs: {
-          client_id: 'fake_client_id',
-          client_secret: 'fake_client_secret',
-        },
         headers: {
-          'If-None-Match': testEtag
-        },
+          'If-None-Match': etag,
+          'user-agent': 'gclone',
+        }
       },
-      result: {headers: {'etag': testEtag}, body: {id: 1}}
+      result: {headers: {}, body: {id: 1}},
     });
 
-    connector.get('/endpoint').then((res1) => {
-      connector.get('/endpoint').then((result) => {
-        assert.deepEqual(result, { id: 1 });
-        done();
-      });
+    return connector.get('/endpoint').then(() => {
+      return connector2.get('/endpoint');
+    }).then((result) => {
+      assert.deepEqual(result, {id: 1 });
     });
   });
 });
