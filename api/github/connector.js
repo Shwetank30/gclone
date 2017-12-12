@@ -3,7 +3,7 @@ import DataLoader from 'dataloader';
 
 // Keys are GitHub API URLs, values are { etag, result } objects
 
-const eTagCache = {};
+let eTagCache = {};
 
 const GITHUB_API_ROOT = 'https://api.github.com';
 
@@ -28,6 +28,7 @@ export class GitHubConnector {
   _fetch(urls) {
     const options = {
       json: true,
+      resolveWithFullResponse: true,
       headers: {
         'user-agent': 'gclone',
       }
@@ -40,13 +41,32 @@ export class GitHubConnector {
       };
     }
 
-    // TBD : implement ETags
     // TODO: pass GitHub API key
 
+    // Implemented ETags
     return Promise.all(urls.map((url) => {
-      return this.rp({
-        uri: url,
-        ...options,
+      console.log("etagcache");
+      console.log(eTagCache);
+
+      const cachedRes = eTagCache[url];
+      console.log("cachedRes");
+      console.log(cachedRes);
+      if(cachedRes && cachedRes.eTag) {
+        options.headers['If-None-Match'] = cachedRes.eTag;
+      }
+      return new Promise((resolve, reject) => {
+        this.rp({
+          uri: url,
+          ...options,
+        }).then((response) => {
+          const body = response['body'];
+          eTagCache[url] = {result: body, eTag: response.headers['etag']};
+          resolve(body);
+        }).catch((err) => {
+          if (err.statusCode == 304) {
+            resolve(cachedRes.result);
+          }
+        });
       });
     }));
   }

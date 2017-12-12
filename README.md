@@ -42,6 +42,69 @@ Does it demonstrate all of the required features above?
 - Redux
 - Passport for login
 
-## Page mockups
 
-Coming soon!
+## Demo Installation
+### 1. Node
+Make sure you have Node v4.x.x installed (app has been tested with node v4.4.5)
+
+### 2. Clone the app
+
+```
+> mkdir myGitHunt && cd $_
+> git clone https://github.com/Shwetank30/gclone.git
+> npm install
+```
+
+### 3. Run Migrations
+Seed the application
+```
+> npm run migrate
+> npm run seed
+```
+
+
+### 4. Setup Github OAuth App
+- Under your Github profile dropdown, choose 'Settings'
+- On the left nav, choose 'OAuth applications'
+- Choose the 'Developer Applications' tab at the top of the page
+- Click 'Register a new application' button
+- Register your application like below
+- Click 'Register application' button
+
+
+
+On the following page, grab:
+- Client ID
+- Client Secret
+
+
+
+### 5. Add Environment Variables
+Set your Client ID and Client Secret Environment variables:
+
+`> GITHUB_CLIENT_ID="your Client ID"; export GITHUB_CLIENT_ID`
+
+`> GITHUB_CLIENT_SECRET="your Client Secret" export GITHUB_CLIENT_SECRET`
+
+
+### 6. Run the app
+
+`> npm  run start`
+
+- Open the client at http://localhost:5200
+- Click "Log in with GitHub" in the upper right corner
+- You'll be presented with the seed items in the app
+
+
+
+#### Submit a Repo
+Click the green Submit button and add repo with the username/repo-name pattern.
+
+
+
+#### New Item
+Review the new item, up vote it and visit the repo via the link.   
+
+
+#### Apollo Server
+The server will run on port 3010. You can access the server's GraphiQL UI at http://localhost:3010/graphql

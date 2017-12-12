@@ -28,7 +28,7 @@ class NewEntry extends React.Component {
 
         <form onSubmit={this._submitForm}>
           <div className="form-group">
-            <label for="exampleInputEmail1">
+            <label htmlFor="exampleInputEmail1">
               Repository name
             </label>
 
