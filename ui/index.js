@@ -40,3 +40,5 @@ render((
     </Router>
   </ApolloProvider>
 ), document.querySelector('#root'));
+
+// Add google analytics here 
