@@ -7,6 +7,9 @@ import { addTypenameToSelectionSet } from 'apollo-client/queries/queryTransform'
 import { ApolloProvider } from 'react-apollo';
 import { registerGqlTag} from 'apollo-client/gql'
 
+// Polyfill fetch for safari support and other browsers
+import 'whatwg-fetch';
+
 import Feed from './Feed';
 import Layout from './Layout';
 import NewEntry from './NewEntry';
@@ -36,9 +39,10 @@ render((
         <IndexRoute component={Feed} />
         <Route path="feed/:type" component={Feed} />
         <Route path="submit" component={NewEntry} />
+        
       </Route>
     </Router>
   </ApolloProvider>
 ), document.querySelector('#root'));
 
-// Add google analytics here 
+// Add google analytics here

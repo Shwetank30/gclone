@@ -63,7 +63,7 @@ const rootResolvers = {
   },
   Mutation: {
     submitRepository(_, { repoFullName }, context) {
-      if(! context.user) {
+      if(!context.user) {
         throw new Error('Must be logged in to submit a repository.');
       }
 
@@ -72,12 +72,12 @@ const rootResolvers = {
           return context.Repositories.getByFullName(repoFullName)
             .catch(() => {
               throw new Error(`Couldn't find repository named "${repoFullName}"`);
-            });
+            })
         })
         .then(() => {
           return context.Entries.submitRepository(
             repoFullName,
-            content.user.login
+            context.user.login
           )
         })
         .then(() => {
