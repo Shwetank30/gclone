@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { addTypenameToSelectionSet } from 'apollo-client/queries/queryTransform';
@@ -39,7 +38,7 @@ render((
         <IndexRoute component={Feed} />
         <Route path="feed/:type" component={Feed} />
         <Route path="submit" component={NewEntry} />
-        
+
       </Route>
     </Router>
   </ApolloProvider>
