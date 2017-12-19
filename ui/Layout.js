@@ -44,7 +44,7 @@ const Profile = ({ data }) => {
   } else {
     return (
       <p className="navbar-text navbar-right">
-        <a href="login/github">Log in with GitHub</a>
+        <a href="/login/github">Log in with GitHub</a>
       </p>
     );
   }
