@@ -50,7 +50,7 @@ Make sure you have Node v4.x.x installed (app has been tested with node v4.4.5)
 ### 2. Clone the app
 
 ```
-> mkdir myGitHunt && cd $_
+> mkdir gclone && cd $_
 > git clone https://github.com/Shwetank30/gclone.git
 > npm install
 ```
